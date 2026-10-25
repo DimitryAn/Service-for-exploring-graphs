@@ -103,10 +103,7 @@ if "base" not in st.session_state:
 
 # ---------- 1. Ввод исходных данных ----------
 st.header("1. Матрица смежности (цены дуг)")
-st.write(
-    "В ячейке (i, j) — цена дуги i→j, **0 — дуги нет**. "
-    "По умолчанию загружен вариант 1: матрица из задания + дуги (12,8) с ценой 4 и (9,10) с ценой 4."
-)
+st.write("В ячейке (i, j) — цена дуги i→j, **0 — дуги нет**. По умолчанию загружены данные варианта 1.")
 
 col1, col2 = st.columns([1, 3])
 # границы проверяем сами, чтобы сообщение было на русском
@@ -178,6 +175,9 @@ st.dataframe(
     column_config={c: st.column_config.NumberColumn(c, width=55) for c in ordered_df.columns},
 )
 
+st.subheader("Граф, упорядоченный по уровням")
+st.graphviz_chart(draw_graph(graph, labels, levels))
+
 # ---------- 3. Минимальный путь ----------
 st.header("3. Минимальный путь")
 vertex_names = [str(v + 1) for v in range(n)]
@@ -201,5 +201,5 @@ else:
             f"длина пути = {distances[end]:g}"
         )
 
-st.subheader("Граф, упорядоченный по уровням")
+st.subheader("Минимальный путь на графе")
 st.graphviz_chart(draw_graph(graph, labels, levels, path))
