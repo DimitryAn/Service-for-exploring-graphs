@@ -109,9 +109,14 @@ st.write(
 )
 
 col1, col2 = st.columns([1, 3])
-n = col1.number_input("Количество вершин", min_value=2, max_value=MAX_VERTICES, step=1, key="n")
+# границы проверяем сами, чтобы сообщение было на русском
+n = col1.number_input("Количество вершин", step=1, key="n")
 col2.write("")
 col2.button("Вернуть данные варианта 1", on_click=reset_to_variant)
+
+if not 2 <= n <= MAX_VERTICES:
+    st.error(f"Количество вершин должно быть от 2 до {MAX_VERTICES}, введено {n}.")
+    st.stop()
 
 if n != len(st.session_state.base):
     st.session_state.base = resize_df(st.session_state.get("edited", st.session_state.base), n)
